@@ -1,0 +1,13 @@
+:root{
+    --space-base:max(5px ,1vw);
+    --space-xmall:calc(var(--space-base)* 2.5);
+    --space-small:calc(var(--space-base)* 5);
+    --space-medium:calc(var(--space-base)* 10);
+
+/*colors*/
+    --bleu:#1675F2;
+    --bleu-sombre: #012340; 
+    --bleu-pale: #2793F2; 
+    --details: #F29D52; 
+    --clair: #F2F2F2; 
+}
