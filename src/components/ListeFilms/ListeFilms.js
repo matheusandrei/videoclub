@@ -6,7 +6,7 @@ import TuileFilm from "../TuileFilm/TuileFilm";
 
 function ListeFilms() {
   const urlListeFilms =
-    "https://four1f-602-partie1.onrender.com/api/films";
+    "https://four1f-tp1-matheusandrei.onrender.com/films";
   const [urlFiltre, setUrlFiltre] = useState(urlListeFilms);
   const [listeFilms, setListeFilms] = useState([]);
 
@@ -20,7 +20,7 @@ function ListeFilms() {
 
   const tuilesFilm = listeFilms.map((film, index) => {
     return (
-      <Link key={index} to={`/film/${film.id}`}>
+      <Link key={index} to={`/films/${film.id}`}>
         <TuileFilm data={film} />
       </Link>
     );

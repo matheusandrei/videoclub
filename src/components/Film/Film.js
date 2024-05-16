@@ -1,26 +1,28 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AppContext } from "../App/App";
 import { useParams } from "react-router-dom";
 import "./Film.css";
 
 function Film() {
+  const context = useContext(AppContext);
+
   const { id } = useParams();
   const [filmDetails, setFilm] = useState(null);
-  const urlTuileFilm = `https://four1f-602-partie1.onrender.com/api/films/${id}`;
+  const urlTuileFilm = `https://four1f-tp1-matheusandrei.onrender.com/films/${id}`;
   useEffect(() => {
     fetch(urlTuileFilm)
       .then((response) => response.json())
       .then((data) => {
         setFilm(data);
-  
+
         // calcule moyenne
-        
       });
-  
   }, [id, urlTuileFilm]);
-  if(!filmDetails){
-    return <div>fasdsadasd</div>;
+  if (!filmDetails) {
+    return <div>film pas trouvé</div>;
   }
   async function soumettreNote(e) {
+    e.preventDefault();
     let aNotes;
     if (!filmDetails.notes) {
       aNotes = [1];
@@ -46,7 +48,57 @@ function Film() {
         // console.log(data);
       });
   }
+  async function soumettreCommentaire(e) {
+    e.preventDefault();
+    let aCommentaires;
+    if (!filmDetails.commentaires) {
+      aCommentaires = [
+        {
+          commentaire: "Je suis un commentaire que vous aurez à dinamiser!",
+          auteur: context.nom,
+        },
+      ];
+    } else {
+      aCommentaires = filmDetails.commentaires;
+      aCommentaires.push([
+        {
+          commentaire: "Je suis un commentaire que vous aurez à dinamiser!",
+          auteur: context.nom,
+        },
+      ]);
+    }
 
+    const oOptions = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ notes: aCommentaires }),
+    };
+
+    let putCommentaire = await fetch(urlTuileFilm, oOptions),
+      getFilm = await fetch(urlTuileFilm);
+
+    Promise.all([putCommentaire, getFilm])
+      .then((reponse) => reponse[1].json())
+      .then((data) => {
+        // console.log(data);
+      });
+  }
+
+  let blockAjoutCommentaire;
+
+  if (context.estLog) {
+    blockAjoutCommentaire = (
+      <form onSubmit={soumettreCommentaire}>
+        <textarea
+          name="commentaire"
+          placeholder="ajouter votre commentaire"
+        ></textarea>
+        <button>Soumettre</button>
+      </form>
+    );
+  }
   return (
     <article>
       <img src={`/img/${filmDetails?.titreVignette}`} alt={filmDetails.titre} />
@@ -55,6 +107,7 @@ function Film() {
       <p>Annee:{filmDetails?.annee}</p>
       <p>notes:{filmDetails?.notes}</p>
       <button onClick={soumettreNote}>Note</button>
+      {blockAjoutCommentaire}
     </article>
   );
 }
