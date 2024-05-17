@@ -1,8 +1,10 @@
+.entete{
+    padding: 40px;
+}
 header{
     display: flex;
     align-items: center;
     justify-content: space-between;
-   
 }
 header a{
     color: var(--bleu-pale);

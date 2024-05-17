@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import "./Film.css";
 
 function Film() {
+ 
   const context = useContext(AppContext);
 
   const { id } = useParams();
@@ -73,7 +74,7 @@ function Film() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ notes: aCommentaires }),
+      body: JSON.stringify({ commentaire: aCommentaires }),
     };
 
     let putCommentaire = await fetch(urlTuileFilm, oOptions),
@@ -90,25 +91,32 @@ function Film() {
 
   if (context.estLog) {
     blockAjoutCommentaire = (
-      <form onSubmit={soumettreCommentaire}>
-        <textarea
-          name="commentaire"
-          placeholder="ajouter votre commentaire"
-        ></textarea>
-        <button>Soumettre</button>
-      </form>
+<form class="comment-form" onSubmit={soumettreCommentaire}>
+    <textarea
+        name="commentaire"
+        placeholder="Ajouter votre commentaire"
+        class="comment-textarea"
+    ></textarea>
+    <button class="submit-button">Soumettre</button>
+</form>
+
     );
   }
   return (
-    <article>
-      <img src={`/img/${filmDetails?.titreVignette}`} alt={filmDetails.titre} />
-      <h2>{filmDetails?.titre}</h2>
-      <p>Realisateur:{filmDetails?.realisation}</p>
-      <p>Annee:{filmDetails?.annee}</p>
-      <p>notes:{filmDetails?.notes}</p>
-      <button onClick={soumettreNote}>Note</button>
-      {blockAjoutCommentaire}
-    </article>
+<article class="film-card">
+  <h2 class="film-title">{filmDetails?.titre}</h2>
+    <img src={`/img/${filmDetails?.titreVignette}`} alt={filmDetails.titre} class="film-img" />
+    <div class="film-info">
+        
+        <p class="film-detail">Réalisateur: <span class="film-data">{filmDetails?.realisation}</span></p>
+        <p class="film-detail">Année: <span class="film-data">{filmDetails?.annee}</span></p>
+        <p class="film-detail">Notes: <span class="film-data">{filmDetails?.notes}</span></p>
+        <button class="note-button" onClick={soumettreNote}>Note</button>
+        {blockAjoutCommentaire}
+    </div>
+</article>
+
+    
   );
 }
 export default Film;
