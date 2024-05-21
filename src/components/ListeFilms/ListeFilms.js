@@ -21,7 +21,7 @@ function ListeFilms() {
   const tuilesFilm = listeFilms.map((film, index) => {
     return (
       <Link key={index} to={`/films/${film.id}`}>
-        <TuileFilm data={film} />
+        <TuileFilm data={film} id={index} />
       </Link>
     );
   });
@@ -34,6 +34,9 @@ function ListeFilms() {
     setUrlFiltre(`${urlListeFilms}?limit=2&orderBy=annee&orderDirection=desc`);
 
   }
+  function testJest(e){
+    e.target.textContent = 'test';
+  }
 
   return (
     <main>
@@ -44,7 +47,7 @@ function ListeFilms() {
           <li></li>
           <li></li>
         </ul>
-        <h2>Liste des films</h2>
+        <h2 data-testid="titre" onClick={testJest}>Liste des films</h2>
         <div className="catalogue">
           {tuilesFilm}
         </div>
