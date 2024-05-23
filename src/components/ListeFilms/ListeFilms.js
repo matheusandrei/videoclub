@@ -74,7 +74,9 @@ const animeGaucheVersDroit={
         >
           {tuilesFilm}
         </motion.div>
-        :''}
+        :
+        
+        <div class="loader"></div>}
       </div>
     </main>
   );

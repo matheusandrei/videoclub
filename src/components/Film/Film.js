@@ -31,7 +31,7 @@ function Film() {
   async function soumettreNote() {
     let aNotes = filmDetails.notes ? [...filmDetails.notes] : [];
 
-    // Adiciona a nota selecionada
+    // ajoute la note selectionnée
     if (note > 0 && note <= 5) {
       aNotes.push(note);
     }
@@ -103,7 +103,7 @@ function Film() {
           value={nouveauCommentaire}
           onChange={(e) => setNouveauCommentaire(e.target.value)}
         ></textarea>
-        <button className="submit-button">Soumettre</button>
+        <button className="submit-button">Soumettre le commentaire</button>
       </form>
     );
   }
@@ -131,7 +131,7 @@ function Film() {
               </button>
             ))}
           </div>
-          <button className="note-button" onClick={soumettreNote}>Note</button>
+          <button className="note-button" onClick={soumettreNote}>Soumettre la note</button>
           {blockAjoutCommentaire}
         </div>
       </article>
