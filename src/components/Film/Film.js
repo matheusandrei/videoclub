@@ -1,27 +1,30 @@
 import { useState, useEffect, useContext } from "react";
 import { AppContext } from "../App/App";
 import { useParams } from "react-router-dom";
+
 import "./Film.css";
 
 function Film() {
- 
   const context = useContext(AppContext);
-
   const { id } = useParams();
   const [filmDetails, setFilm] = useState(null);
+  const [nouveauCommentaire, setNouveauCommentaire] = useState('');
+
   const urlTuileFilm = `https://four1f-tp1-matheusandrei.onrender.com/films/${id}`;
+
   useEffect(() => {
     fetch(urlTuileFilm)
       .then((response) => response.json())
       .then((data) => {
         setFilm(data);
-
         // calcule moyenne
       });
   }, [id, urlTuileFilm]);
+
   if (!filmDetails) {
-    return <div>film pas trouvé</div>;
+    return <div>Film pas trouvé</div>;
   }
+
   async function soumettreNote(e) {
     e.preventDefault();
     let aNotes;
@@ -46,27 +49,26 @@ function Film() {
     Promise.all([putNote, getFilm])
       .then((reponse) => reponse[1].json())
       .then((data) => {
-        // console.log(data);
+        setFilm(data);
       });
   }
+
   async function soumettreCommentaire(e) {
     e.preventDefault();
     let aCommentaires;
     if (!filmDetails.commentaires) {
       aCommentaires = [
         {
-          commentaire: "Je suis un commentaire que vous aurez à dinamiser!",
+          commentaire: nouveauCommentaire,
           auteur: context.nom,
         },
       ];
     } else {
       aCommentaires = filmDetails.commentaires;
-      aCommentaires.push([
-        {
-          commentaire: "Je suis un commentaire que vous aurez à dinamiser!",
-          auteur: context.nom,
-        },
-      ]);
+      aCommentaires.push({
+        commentaire: nouveauCommentaire,
+        auteur: context.nom,
+      });
     }
 
     const oOptions = {
@@ -74,7 +76,7 @@ function Film() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ commentaire: aCommentaires }),
+      body: JSON.stringify({ commentaires: aCommentaires }),
     };
 
     let putCommentaire = await fetch(urlTuileFilm, oOptions),
@@ -83,7 +85,8 @@ function Film() {
     Promise.all([putCommentaire, getFilm])
       .then((reponse) => reponse[1].json())
       .then((data) => {
-        // console.log(data);
+        setFilm(data);
+        setNouveauCommentaire(''); 
       });
   }
 
@@ -91,32 +94,42 @@ function Film() {
 
   if (context.estLog) {
     blockAjoutCommentaire = (
-<form class="comment-form" onSubmit={soumettreCommentaire}>
-    <textarea
-        name="commentaire"
-        placeholder="Ajouter votre commentaire"
-        class="comment-textarea"
-    ></textarea>
-    <button class="submit-button">Soumettre</button>
-</form>
-
+      <form className="comment-form" onSubmit={soumettreCommentaire}>
+        <textarea
+          name="commentaire"
+          placeholder="Ajouter votre commentaire"
+          className="comment-textarea"
+          value={nouveauCommentaire}
+          onChange={(e) => setNouveauCommentaire(e.target.value)}
+        ></textarea>
+        <button className="submit-button">Soumettre</button>
+      </form>
     );
   }
-  return (
-<article class="film-card">
-  <h2 class="film-title">{filmDetails?.titre}</h2>
-    <img src={`/img/${filmDetails?.titreVignette}`} alt={filmDetails.titre} class="film-img" />
-    <div class="film-info">
-        
-        <p class="film-detail">Réalisateur: <span class="film-data">{filmDetails?.realisation}</span></p>
-        <p class="film-detail">Année: <span class="film-data">{filmDetails?.annee}</span></p>
-        <p class="film-detail">Notes: <span class="film-data">{filmDetails?.notes}</span></p>
-        <button class="note-button" onClick={soumettreNote}>Note</button>
-        {blockAjoutCommentaire}
-    </div>
-</article>
 
-    
+  return (
+    <article className="film-card">
+      <h2 className="film-title">{filmDetails?.titre}</h2>
+      <img
+        src={`/img/${filmDetails?.titreVignette}`}
+        alt={filmDetails.titre}
+        className="film-img"
+      />
+      <div className="film-info">
+        <p className="film-detail">
+          Réalisateur: <span className="film-data">{filmDetails?.realisation}</span>
+        </p>
+        <p className="film-detail">
+          Année: <span className="film-data">{filmDetails?.annee}</span>
+        </p>
+        <p className="film-detail">
+          Notes: <span className="film-data">{filmDetails?.notes}</span>
+        </p>
+        <button className="note-button" onClick={soumettreNote}>Note</button>
+        {blockAjoutCommentaire}
+      </div>
+    </article>
   );
 }
+
 export default Film;
