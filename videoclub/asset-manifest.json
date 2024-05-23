@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/videoclub/static/css/main.e8916b8f.css",
+    "main.js": "/videoclub/static/js/main.85976e0e.js",
+    "index.html": "/videoclub/index.html",
+    "main.e8916b8f.css.map": "/videoclub/static/css/main.e8916b8f.css.map",
+    "main.85976e0e.js.map": "/videoclub/static/js/main.85976e0e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e8916b8f.css",
+    "static/js/main.85976e0e.js"
+  ]
+}

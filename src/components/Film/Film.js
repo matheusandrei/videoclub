@@ -1,6 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../App/App";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 import "./Film.css";
 
@@ -9,6 +11,7 @@ function Film() {
   const { id } = useParams();
   const [filmDetails, setFilm] = useState(null);
   const [nouveauCommentaire, setNouveauCommentaire] = useState('');
+  const [note, setNote] = useState(0);
 
   const urlTuileFilm = `https://four1f-tp1-matheusandrei.onrender.com/films/${id}`;
 
@@ -25,14 +28,12 @@ function Film() {
     return <div>Film pas trouvé</div>;
   }
 
-  async function soumettreNote(e) {
-    e.preventDefault();
-    let aNotes;
-    if (!filmDetails.notes) {
-      aNotes = [1];
-    } else {
-      aNotes = filmDetails.notes;
-      aNotes.push(1);
+  async function soumettreNote() {
+    let aNotes = filmDetails.notes ? [...filmDetails.notes] : [];
+
+    // Adiciona a nota selecionada
+    if (note > 0 && note <= 5) {
+      aNotes.push(note);
     }
 
     const oOptions = {
@@ -43,8 +44,8 @@ function Film() {
       body: JSON.stringify({ notes: aNotes }),
     };
 
-    let putNote = await fetch(urlTuileFilm, oOptions),
-      getFilm = await fetch(urlTuileFilm);
+    let putNote = await fetch(urlTuileFilm, oOptions);
+    let getFilm = await fetch(urlTuileFilm);
 
     Promise.all([putNote, getFilm])
       .then((reponse) => reponse[1].json())
@@ -79,14 +80,14 @@ function Film() {
       body: JSON.stringify({ commentaires: aCommentaires }),
     };
 
-    let putCommentaire = await fetch(urlTuileFilm, oOptions),
-      getFilm = await fetch(urlTuileFilm);
+    let putCommentaire = await fetch(urlTuileFilm, oOptions);
+    let getFilm = await fetch(urlTuileFilm);
 
     Promise.all([putCommentaire, getFilm])
       .then((reponse) => reponse[1].json())
       .then((data) => {
         setFilm(data);
-        setNouveauCommentaire(''); 
+        setNouveauCommentaire('');
       });
   }
 
@@ -117,19 +118,25 @@ function Film() {
       />
       <div className="film-info">
         <p className="film-detail">
-          Réalisateur: <span className="film-data">{filmDetails?.realisation}</span>
-        </p>
-        <p className="film-detail">
-          Année: <span className="film-data">{filmDetails?.annee}</span>
-        </p>
-        <p className="film-detail">
-          Notes: <span className="film-data">{filmDetails?.notes}</span>
-        </p>
-        <button className="note-button" onClick={soumettreNote}>Note</button>
-        {blockAjoutCommentaire}
-      </div>
-    </article>
-  );
-}
-
-export default Film;
+          Réalisateur: <span
+          className="film-data">{filmDetails?.realisation}</span>
+          </p>
+          <p className="film-detail">
+            Année: <span className="film-data">{filmDetails?.annee}</span>
+          </p>
+          <div className="note-buttons">
+            {[1, 2, 3, 4, 5].map((n) => (
+              <button key={n} onClick={() => { setNote(n); soumettreNote(); }}>
+                <FontAwesomeIcon icon={faStar} color={note >= n ? "gold" : "gray"} />
+              </button>
+            ))}
+          </div>
+          <button className="note-button" onClick={soumettreNote}>Note</button>
+          {blockAjoutCommentaire}
+        </div>
+      </article>
+    );
+  }
+  
+  export default Film;
+  
