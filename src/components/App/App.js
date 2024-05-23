@@ -1,5 +1,6 @@
-import {BrowserRouter as Router,Routes, Route,useParams, Navigate } from 'react-router-dom'
+import {BrowserRouter as Router,Routes, Route,useParams, Navigate, useLocation } from 'react-router-dom'
 import React, { useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import Entete from '../Entete/Entete'
 import Accueil from '../Accueil/Accueil'
 import ListeFilms from '../ListeFilms/ListeFilms'
@@ -12,6 +13,7 @@ export const AppContext = React.createContext();
 
 function App() {
 
+  const location = useLocation()
   // const [estLog, setEstLog]= useState(false);
   const [usager,setUsager] = useState({estLog:false,nom:''});
 
@@ -26,16 +28,17 @@ function App() {
   }
   return (
     <AppContext.Provider value={usager} >
-      <Router>
+      
         <Entete handleLogin={login}/>
-          <Routes>
-            <Route path="/" element={<Accueil/>}/>
-            <Route path="/films" element={<ListeFilms/>}/>
-            <Route path="/films/:id" element={<Film/>}/>
-            <Route path="/*" element={<Erreur404/>}/>
-            <Route path="/admin" element={usager.estLog ? <Admin/> : <Navigate to="/" />} />
-          </Routes>
-      </Router>
+          <AnimatePresence mode='wait'>
+            <Routes location={location} key={location.key}>
+              <Route path="/" element={<Accueil/>}/>
+              <Route path="/films" element={<ListeFilms/>}/>
+              <Route path="/films/:id" element={<Film/>}/>
+              <Route path="/*" element={<Erreur404/>}/>
+              <Route path="/admin" element={usager.estLog ? <Admin/> : <Navigate to="/" />} />
+            </Routes>
+          </AnimatePresence>
     </AppContext.Provider>
   );
 }

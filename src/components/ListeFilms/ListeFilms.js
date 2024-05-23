@@ -1,20 +1,23 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { motion } from 'framer-motion'
 import "./ListeFilms.css";
 import TuileFilm from "../TuileFilm/TuileFilm";
 
 function ListeFilms() {
+
   const urlListeFilms =
     "https://four1f-tp1-matheusandrei.onrender.com/films";
   const [urlFiltre, setUrlFiltre] = useState(urlListeFilms);
   const [listeFilms, setListeFilms] = useState([]);
-
+  const [estCharge,setEstCharge] = useState(false)
   useEffect(() => {
     fetch(urlFiltre)
       .then((response) => response.json())
       .then((data) => {
         setListeFilms(data);
+        setEstCharge(true);
       });
   }, [urlFiltre]);
 
@@ -38,6 +41,18 @@ function ListeFilms() {
     e.target.textContent = 'test';
   }
 
+const transition = {duration:1, ease:'easeInOut'}
+
+const animeBasVersHaut={
+  hidden:{ opacity:0, y:25 },
+  visible:{ opacity:1,y:0, transition},
+  exit:{ opacity:0, y:25,transition }
+}
+const animeGaucheVersDroit={
+  hidden:{ opacity:0, x:-25 },
+  visible:{ opacity:1,y:0, transition},
+  exit:{ opacity:0, x:-25,transition }
+}
   return (
     <main>
      
@@ -48,9 +63,18 @@ function ListeFilms() {
           <li></li>
         </ul>
         <h2 data-testid="titre" onClick={testJest}>Liste des films</h2>
-        <div className="catalogue">
+        { estCharge?
+        <motion.div 
+        key='films'
+        className="catalogue"
+        initial='hidden'
+        animate='visible'
+        exit='exit'
+        variants={animeBasVersHaut}
+        >
           {tuilesFilm}
-        </div>
+        </motion.div>
+        :''}
       </div>
     </main>
   );
