@@ -13,7 +13,7 @@ function Film() {
   const [nouveauCommentaire, setNouveauCommentaire] = useState('');
   const [note, setNote] = useState(0);
 
-  const urlTuileFilm = `https://four1f-tp1-matheusandrei.onrender.com/films/${id}`;
+  const urlTuileFilm = `https://four1f-tp1-matheusandrei.onrender.com/api/films/${id}`;
 
   useEffect(() => {
     fetch(urlTuileFilm)

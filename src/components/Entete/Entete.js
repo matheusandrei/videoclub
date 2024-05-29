@@ -5,24 +5,35 @@ import "./Entete.css";
 function Entete(props) {
 const context = useContext(AppContext)
 // console.log(props);
-  return (
-    <div className="wrapper entete">
-      <header >
+return (
+  //TODO Ajouter l'etat de connexion
+  <header>
+    <div className="wrapper">
+      <div className="entete">
         <NavLink to="/">
-          <h1>Accueil</h1>
+          <img className="logo" src="/img/logo-cinestream.png" alt="logo"/>
         </NavLink>
         <nav>
-        {context.estLog ? <NavLink to='admin'>Admin</NavLink>:''}
-          <NavLink to="films">Liste des films </NavLink>
+          {context.estLog && <NavLink to='admin'>Admin</NavLink>}
+          <NavLink to="films">Liste des films</NavLink>
         </nav>
-        <form onSubmit={props.handleLogin}>
-          {/* <input ref={elUsager} type="text" name="usager" placeholder="Usager"></input> */}
-           <input type="text" name="usager" placeholder="Usager"></input> 
+      </div>
+
+      {context.estLog ? (
+        <div className="">
+          <span>{context.nom}</span>
+          <button onClick={props.handleLogout}>Logout</button>
+        </div>
+      ) : (
+        <form className="entete__form" onSubmit={props.handleLogin}>
+          <input type="text" name="courriel" placeholder="Usager" />
+          <input type="password" name="mdp" placeholder="Mot de passe" />
           <button>Login</button>
         </form>
-      </header>
+      )}
     </div>
-  );
+</header>
+);
 }
 
 export default Entete;
