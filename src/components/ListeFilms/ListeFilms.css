@@ -4,6 +4,22 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-gap: var(--space-xmall);
 }
+.catalogue p {
+  margin: 5px 0;
+
+}
+.catalogue a {
+  margin: 5px 0;
+text-decoration: none;
+}
+.catalogue:hover .tuile-film {
+  opacity: 0.4;
+}
+
+.catalogue .tuile-film:hover {
+  opacity: 1;
+}
+
 
 .loader {
   width: 120px;

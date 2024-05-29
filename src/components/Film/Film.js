@@ -109,32 +109,34 @@ function Film() {
   }
 
   return (
-    <article className="film-card">
-      <h2 className="film-title">{filmDetails?.titre}</h2>
-      <img
-        src={`/img/${filmDetails?.titreVignette}`}
-        alt={filmDetails.titre}
-        className="film-img"
-      />
-      <div className="film-info">
-        <p className="film-detail">
-          Réalisateur: <span
-          className="film-data">{filmDetails?.realisation}</span>
-          </p>
-          <p className="film-detail">
-            Année: <span className="film-data">{filmDetails?.annee}</span>
-          </p>
-          <div className="note-buttons">
-            {[1, 2, 3, 4, 5].map((n) => (
-              <button key={n} onClick={() => { setNote(n); soumettreNote(); }}>
-                <FontAwesomeIcon icon={faStar} color={note >= n ? "gold" : "gray"} />
-              </button>
-            ))}
-          </div>
-          <button className="note-button" onClick={soumettreNote}>Soumettre la note</button>
-          {blockAjoutCommentaire}
-        </div>
-      </article>
+<article className="film-card">
+  <h2 className="film-title">{filmDetails?.titre}</h2>
+  <div className="film-content">
+    <img
+      src={`/img/${filmDetails?.titreVignette}`}
+      alt={filmDetails.titre}
+      className="film-img"
+    />
+    <div className="film-info">
+      <p className="film-detail">
+        Réalisateur: <span className="film-data">{filmDetails?.realisation}</span>
+      </p>
+      <p className="film-detail">
+        Année: <span className="film-data">{filmDetails?.annee}</span>
+      </p>
+      <div className="note-buttons">
+        {[1, 2, 3, 4, 5].map((n) => (
+          <button key={n} onClick={() => { setNote(n); soumettreNote(); }}>
+            <FontAwesomeIcon icon={faStar} color={note >= n ? "blue" : "grey"} />
+          </button>
+        ))}
+      </div>
+      <button className="note-button" onClick={soumettreNote}>Soumettre la note</button>
+      {blockAjoutCommentaire}
+    </div>
+  </div>
+</article>
+
     );
   }
   

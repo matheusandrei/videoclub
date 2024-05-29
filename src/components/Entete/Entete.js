@@ -17,20 +17,21 @@ return (
           {context.estLog && <NavLink to='admin'>Admin</NavLink>}
           <NavLink to="films">Liste des films</NavLink>
         </nav>
-      </div>
-
-      {context.estLog ? (
-        <div className="">
+        {context.estLog ? (
+        <div className="logout">
           <span>{context.nom}</span>
           <button onClick={props.handleLogout}>Logout</button>
         </div>
       ) : (
-        <form className="entete__form" onSubmit={props.handleLogin}>
+        <form className="entete-form" onSubmit={props.handleLogin}>
           <input type="text" name="courriel" placeholder="Usager" />
           <input type="password" name="mdp" placeholder="Mot de passe" />
           <button>Login</button>
         </form>
       )}
+      </div>
+
+
     </div>
 </header>
 );

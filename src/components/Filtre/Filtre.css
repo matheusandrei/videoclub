@@ -1,0 +1,28 @@
+.filtre-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+   
+    margin-bottom: 20px;
+  }
+  
+  .filtre-list li {
+    cursor: pointer;
+    padding: 10px 15px;
+    border: none;
+    
+    color: var(--clair);
+    position: relative;
+    transition: color 0.3s ease;
+  }
+  
+  .filtre-list li:hover {
+    color: #0056b3;
+  }
+  
+  .filtre-list li.active {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+ 
