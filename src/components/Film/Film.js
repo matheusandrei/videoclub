@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../App/App";
 import { useParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import Note from "../Note/Note";
+import Commentaire from "../Commentaire/Commentaire";
 
 import "./Film.css";
 
 function Film() {
   const context = useContext(AppContext);
   const { id } = useParams();
-  const [filmDetails, setFilm] = useState(null);
+  const [filmDetails, setFilmDetails] = useState(null);
   const [nouveauCommentaire, setNouveauCommentaire] = useState('');
   const [note, setNote] = useState(0);
 
@@ -19,8 +19,7 @@ function Film() {
     fetch(urlTuileFilm)
       .then((response) => response.json())
       .then((data) => {
-        setFilm(data);
-        // calcule moyenne
+        setFilmDetails(data);
       });
   }, [id, urlTuileFilm]);
 
@@ -31,7 +30,6 @@ function Film() {
   async function soumettreNote() {
     let aNotes = filmDetails.notes ? [...filmDetails.notes] : [];
 
-    // ajoute la note selectionnée
     if (note > 0 && note <= 5) {
       aNotes.push(note);
     }
@@ -44,14 +42,10 @@ function Film() {
       body: JSON.stringify({ notes: aNotes }),
     };
 
-    let putNote = await fetch(urlTuileFilm, oOptions);
-    let getFilm = await fetch(urlTuileFilm);
-
-    Promise.all([putNote, getFilm])
-      .then((reponse) => reponse[1].json())
-      .then((data) => {
-        setFilm(data);
-      });
+    await fetch(urlTuileFilm, oOptions);
+    const response = await fetch(urlTuileFilm);
+    const updatedFilm = await response.json();
+    setFilmDetails(updatedFilm);
   }
 
   async function soumettreCommentaire(e) {
@@ -80,65 +74,43 @@ function Film() {
       body: JSON.stringify({ commentaires: aCommentaires }),
     };
 
-    let putCommentaire = await fetch(urlTuileFilm, oOptions);
-    let getFilm = await fetch(urlTuileFilm);
-
-    Promise.all([putCommentaire, getFilm])
-      .then((reponse) => reponse[1].json())
-      .then((data) => {
-        setFilm(data);
-        setNouveauCommentaire('');
-      });
-  }
-
-  let blockAjoutCommentaire;
-
-  if (context.estLog) {
-    blockAjoutCommentaire = (
-      <form className="comment-form" onSubmit={soumettreCommentaire}>
-        <textarea
-          name="commentaire"
-          placeholder="Ajouter votre commentaire"
-          className="comment-textarea"
-          value={nouveauCommentaire}
-          onChange={(e) => setNouveauCommentaire(e.target.value)}
-        ></textarea>
-        <button className="submit-button">Soumettre le commentaire</button>
-      </form>
-    );
+    await fetch(urlTuileFilm, oOptions);
+    const response = await fetch(urlTuileFilm);
+    const updatedFilm = await response.json();
+    setFilmDetails(updatedFilm);
+    setNouveauCommentaire('');
   }
 
   return (
-<article className="film-card">
-  <h2 className="film-title">{filmDetails?.titre}</h2>
-  <div className="film-content">
-    <img
-      src={`/img/${filmDetails?.titreVignette}`}
-      alt={filmDetails.titre}
-      className="film-img"
-    />
-    <div className="film-info">
-      <p className="film-detail">
-        Réalisateur: <span className="film-data">{filmDetails?.realisation}</span>
-      </p>
-      <p className="film-detail">
-        Année: <span className="film-data">{filmDetails?.annee}</span>
-      </p>
-      <div className="note-buttons">
-        {[1, 2, 3, 4, 5].map((n) => (
-          <button key={n} onClick={() => { setNote(n); soumettreNote(); }}>
-            <FontAwesomeIcon icon={faStar} color={note >= n ? "blue" : "grey"} />
-          </button>
-        ))}
+    <article className="film-card">
+      <h2 className="film-title">{filmDetails?.titre}</h2>
+      <div className="film-content">
+        <img
+          src={`/img/${filmDetails?.titreVignette}`}
+          alt={filmDetails.titre}
+          className="film-img"
+        />
+        <div className="film-info">
+          <p className="film-detail">
+            Réalisateur: <span className="film-data">{filmDetails?.realisation}</span>
+          </p>
+          <p className="film-detail">
+            Année: <span className="film-data">{filmDetails?.annee}</span>
+          </p>
+          <Note
+            note={note}
+            setNote={setNote}
+            soumettreNote={soumettreNote}
+          />
+          <Commentaire
+            nouveauCommentaire={nouveauCommentaire}
+            setNouveauCommentaire={setNouveauCommentaire}
+            soumettreCommentaire={soumettreCommentaire}
+          />
+        </div>
       </div>
-      <button className="note-button" onClick={soumettreNote}>Soumettre la note</button>
-      {blockAjoutCommentaire}
-    </div>
-  </div>
-</article>
+    </article>
+  );
+}
 
-    );
-  }
-  
-  export default Film;
-  
+export default Film;
