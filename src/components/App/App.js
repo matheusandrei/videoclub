@@ -21,11 +21,11 @@ import "./App.css";
 export const AppContext = React.createContext();
 
 function App() {
-  let appState = "DEV";
+  // let appState = "DEV";
   let apiBaseURL = "https://four1f-tp1-matheusandrei.onrender.com/";
-  if (appState === "DEV") {
-    apiBaseURL = "http://localhost:5502/";
-  }
+  // if (appState === "DEV") {
+  //   apiBaseURL = "http://localhost:5502/";
+  // }
   const location = useLocation();
   // const [estLog, setEstLog]= useState(false);
   const [usager, setUsager] = useState({ estLog: false, user: {} });

@@ -3,15 +3,13 @@
     padding: 0;
     display: flex;
     margin-bottom: 20px;
+    justify-content: center;
   }
   
   .filtre-list li {
     cursor: pointer;
     padding: 10px 15px;
-    border: none;
-    
     color: var(--clair);
-    position: relative;
     transition: color 0.3s ease;
   }
   

@@ -10,13 +10,13 @@ return (
   <header>
     <div className="wrapper">
       <div className="entete">
-        <NavLink to="/">
-          <img className="logo" src="/img/logo-cinestream.png" alt="logo"/>
-        </NavLink>
         <nav>
           {context.estLog && <NavLink to='admin'>Admin</NavLink>}
           <NavLink to="films">Liste des films</NavLink>
         </nav>
+        <NavLink to="/">
+          <img className="logo" src="/img/logo-cinestream.png" alt="logo"/>
+        </NavLink>
         {context.estLog ? (
         <div className="logout">
           <span>{context.nom}</span>

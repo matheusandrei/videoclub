@@ -29,7 +29,9 @@ function ListeFilms() {
 
   const handleFiltreChange = (filtre) => {
     setFiltreActif(filtre);
+    
     setUrlFiltre(`${urlListeFilms}?orderBy=${filtre.orderBy}&orderDirection=${filtre.orderDirection}`);
+
   };
 
   const transition = { duration: 1, ease: "easeInOut" };
@@ -44,7 +46,6 @@ function ListeFilms() {
       <div className="wrapper">
         <Filtre onChange={handleFiltreChange} />
        
-        <h2 data-testid="titre">Liste des films</h2>
         {estCharge ? (
           <motion.div
             key="films"

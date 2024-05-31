@@ -11,6 +11,9 @@ const FILTRES = [
 ];
 
 function Filtre({ onChange, filtreActif }) {
+  
+  
+  
     return (
       <ul className="filtre-list">
         {FILTRES.map((filtre, index) => (

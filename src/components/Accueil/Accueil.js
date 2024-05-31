@@ -3,7 +3,9 @@ import "./Accueil.css";
 function Accueil() {
   return (
     <>
-    <img className="hero" src="/img/hero-banner.jpg" alt="hero"/>
+    <div class="image-container">
+      <img class="hero" src="/img/hero-banner.jpg" alt="hero"/>
+    </div>
     <div className="wrapper">
       <main>
         {accueilData.map((paragraph, index) => (

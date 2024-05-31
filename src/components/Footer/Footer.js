@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
 import './Footer.css';
 
-class Footer extends Component {
-  render() {
+function Footer() {
+  
     return (
       <footer className="footer">
-        <div class="wrapper">
+        <div className="wrapper">
             <div className="footer-content">
               <div className="footer-section">
                 <h3>À propos de nous</h3>
-                <p>Présentez brièvement votre vidéoclub et ce qui le rend spécial.</p>
+                <p>Rejoignez notre communauté de cinéphiles et découvrez le meilleur du cinéma !</p>
               </div>
               <div className="footer-section">
                 <h3>Contact</h3>
-                <p>Adresse : Pie VXIII</p>
-                <p>Téléphone : 555 5555 5555</p>
-                <p>Email : cinestream.com</p>
+                <p>Pie VXIII</p>
+                <p>555 5555 5555</p>
+                <p>cinestream.com</p>
               </div>
               <div className="footer-section">
                 <h3>Réseaux Sociaux</h3>
@@ -27,12 +26,12 @@ class Footer extends Component {
               </div>
             </div>
             <div className="footer-bottom">
-              <p>&copy; {new Date().getFullYear()} Votre cinestream. Tous droits réservés.</p>
+              <p>&copy; {new Date().getFullYear()} Cinestream. Tous droits réservés.</p>
             </div>
         </div>
       </footer>
     );
   }
-}
+
 
 export default Footer;

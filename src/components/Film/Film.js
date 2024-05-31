@@ -12,13 +12,23 @@ function Film() {
   const [filmDetails, setFilmDetails] = useState(null);
   const [nouveauCommentaire, setNouveauCommentaire] = useState('');
   const [note, setNote] = useState(0);
+  const [noteMoyenne, setnoteMoyenne] = useState(0); 
 
   const urlTuileFilm = `https://four1f-tp1-matheusandrei.onrender.com/api/films/${id}`;
 
   useEffect(() => {
     fetch(urlTuileFilm)
       .then((response) => response.json())
-      .then((data) => setFilmDetails(data))
+      .then((data) => {
+        setFilmDetails(data);
+
+        // calcul de la moyenne des notes si des notes existent
+        if (data.notes && data.notes.length > 0) {
+          const sum = data.notes.reduce((total, current) => total + current, 0);
+          const moyenne = sum / data.notes.length;
+          setnoteMoyenne(moyenne);
+        }
+      })
       .catch((error) => console.error('Erreur de chargement du film:', error));
   }, [id]);
 
@@ -46,7 +56,14 @@ function Film() {
       const response = await fetch(urlTuileFilm);
       const updatedFilm = await response.json();
       setFilmDetails(updatedFilm);
-      setNote(0); // Reset note after submission
+      setNote(0);
+
+      // calcul de la moyenne
+      const sum = updatedFilm.notes.reduce((total, current) => total + current, 0);
+      const moyenne = sum / updatedFilm.notes.length;
+
+      // met a jour la moyenne des notes
+      setnoteMoyenne(moyenne);
     } catch (error) {
       console.error('Erreur de soumission de la note:', error);
     }
@@ -106,11 +123,9 @@ function Film() {
             setNouveauCommentaire={setNouveauCommentaire}
             soumettreCommentaire={soumettreCommentaire}
           />
+  
           <p className="film-detail">
-            Notes:{" "}
-            {filmDetails?.notes && filmDetails.notes.length > 0
-              ? filmDetails.notes.join(", ")
-              : "Ce film n'a pas encore été noté"}
+            {`Moyenne des notes: ${noteMoyenne.toFixed(2)}/5` }
           </p>
           <div>
             <p className="film-detail">Commentaires :</p>
