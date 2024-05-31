@@ -46,6 +46,8 @@ function Film() {
     const response = await fetch(urlTuileFilm);
     const updatedFilm = await response.json();
     setFilmDetails(updatedFilm);
+    setNote('')
+
   }
 
   async function soumettreCommentaire(e) {

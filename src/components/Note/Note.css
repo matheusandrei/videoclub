@@ -12,4 +12,26 @@
   .note-button:hover {
     background-color: var(--bleu-pale);
   }
+  .note-buttons {
+    margin-bottom: 10px;
+  }
+  
+  
+  .star-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .fa-star {
+    transition: color 0.3s;
+  }
+  
+  .fa-star.active {
+    color: gold;
+  }
+  
+  .star-button:hover .fa-star {
+    color: orange;
+  }
   

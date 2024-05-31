@@ -2,7 +2,7 @@ import accueilData from './Accueil.json';
 
 function Accueil() {
   return (
-    <div class="wrapper">
+    <div className="wrapper">
       <main>
         <h2>Accueil</h2>
         {accueilData.map((paragraph, index) => (

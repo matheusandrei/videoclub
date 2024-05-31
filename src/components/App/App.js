@@ -54,7 +54,7 @@ function App() {
       },
       body: JSON.stringify(body),
     };
-    console.log(apiBaseURL);
+
     const reponse = await fetch(
       `${apiBaseURL}api/utilisateurs/connexion`,
       data
