@@ -7,7 +7,7 @@ import Commentaire from "../Commentaire/Commentaire";
 import "./Film.css";
 
 function Film() {
-  const context = useContext(AppContext);
+  const { nom } = useContext(AppContext);
   const { id } = useParams();
   const [filmDetails, setFilmDetails] = useState(null);
   const [nouveauCommentaire, setNouveauCommentaire] = useState('');
@@ -18,23 +18,22 @@ function Film() {
   useEffect(() => {
     fetch(urlTuileFilm)
       .then((response) => response.json())
-      .then((data) => {
-        setFilmDetails(data);
-      });
-  }, [id, urlTuileFilm]);
+      .then((data) => setFilmDetails(data))
+      .catch((error) => console.error('Erreur de chargement du film:', error));
+  }, [id]);
 
   if (!filmDetails) {
     return <div>Film pas trouvé</div>;
   }
 
-  async function soumettreNote() {
+  const soumettreNote = async () => {
     let aNotes = filmDetails.notes ? [...filmDetails.notes] : [];
 
     if (note > 0 && note <= 5) {
       aNotes.push(note);
     }
 
-    const oOptions = {
+    const options = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -42,33 +41,27 @@ function Film() {
       body: JSON.stringify({ notes: aNotes }),
     };
 
-    await fetch(urlTuileFilm, oOptions);
-    const response = await fetch(urlTuileFilm);
-    const updatedFilm = await response.json();
-    setFilmDetails(updatedFilm);
-    setNote('')
-
+    try {
+      await fetch(urlTuileFilm, options);
+      const response = await fetch(urlTuileFilm);
+      const updatedFilm = await response.json();
+      setFilmDetails(updatedFilm);
+      setNote(0); // Reset note after submission
+    } catch (error) {
+      console.error('Erreur de soumission de la note:', error);
+    }
   }
 
-  async function soumettreCommentaire(e) {
+  const soumettreCommentaire = async (e) => {
     e.preventDefault();
-    let aCommentaires;
-    if (!filmDetails.commentaires) {
-      aCommentaires = [
-        {
-          commentaire: nouveauCommentaire,
-          auteur: context.nom,
-        },
-      ];
-    } else {
-      aCommentaires = filmDetails.commentaires;
-      aCommentaires.push({
-        commentaire: nouveauCommentaire,
-        auteur: context.nom,
-      });
-    }
+    const aCommentaires = filmDetails.commentaires ? [...filmDetails.commentaires] : [];
+    
+    aCommentaires.push({
+      commentaire: nouveauCommentaire,
+      auteur: nom,
+    });
 
-    const oOptions = {
+    const options = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -76,11 +69,15 @@ function Film() {
       body: JSON.stringify({ commentaires: aCommentaires }),
     };
 
-    await fetch(urlTuileFilm, oOptions);
-    const response = await fetch(urlTuileFilm);
-    const updatedFilm = await response.json();
-    setFilmDetails(updatedFilm);
-    setNouveauCommentaire('');
+    try {
+      await fetch(urlTuileFilm, options);
+      const response = await fetch(urlTuileFilm);
+      const updatedFilm = await response.json();
+      setFilmDetails(updatedFilm);
+      setNouveauCommentaire('');
+    } catch (error) {
+      console.error('Erreur de soumission du commentaire:', error);
+    }
   }
 
   return (
@@ -109,14 +106,21 @@ function Film() {
             setNouveauCommentaire={setNouveauCommentaire}
             soumettreCommentaire={soumettreCommentaire}
           />
-<p>
-  Note pour ce film:{" "}
-  {filmDetails?.notes && filmDetails.notes.length > 0
-    ? filmDetails.notes.join(", ")
-    : "Ce film n'a pas encore été noté"}
-</p>
-
-          <p>{filmDetails?.commentaire}</p>
+          <p className="film-detail">
+            Note pour ce film:{" "}
+            {filmDetails?.notes && filmDetails.notes.length > 0
+              ? filmDetails.notes.join(", ")
+              : "Ce film n'a pas encore été noté"}
+          </p>
+          <div>
+            {filmDetails.commentaires && filmDetails.commentaires.length > 0 ? (
+              filmDetails.commentaires.map((comment, index) => (
+                <p className="film-detail" key={index}><strong>{comment.auteur}:</strong> {comment.commentaire}</p>
+              ))
+            ) : (
+              <p className="film-detail">Ce film n'a pas encore de commentaires</p>
+            )}
+          </div>
         </div>
       </div>
     </article>

@@ -14,7 +14,7 @@ function Commentaire({ nouveauCommentaire, setNouveauCommentaire, soumettreComme
           value={nouveauCommentaire}
           onChange={(e) => setNouveauCommentaire(e.target.value)}
         ></textarea>
-        <button className="submit-button">Soumettre le commentaire</button>
+        <button className="submit-button">Commenter</button>
       </form>
     )
   );

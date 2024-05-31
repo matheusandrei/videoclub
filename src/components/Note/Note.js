@@ -19,12 +19,12 @@ function Note({ note, setNote, soumettreNote }) {
           >
             <FontAwesomeIcon
               icon={faSolidStar}
-              className={`fa-solid fa-star ${note >= n || noteSurvolee >= n ? "active" : ""}`}
+              className={`fa-solid fa-star fa-2x ${note >= n || noteSurvolee >= n ? "active" : ""}`}
             />
           </button>
         ))}
       </div>
-      <button className="note-button" onClick={soumettreNote}>Soumettre la note</button>
+      <button className="note-button" onClick={soumettreNote}>Noter</button>
     </div>
   );
 }
