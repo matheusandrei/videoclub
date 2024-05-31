@@ -107,15 +107,16 @@ function Film() {
             soumettreCommentaire={soumettreCommentaire}
           />
           <p className="film-detail">
-            Note pour ce film:{" "}
+            Notes:{" "}
             {filmDetails?.notes && filmDetails.notes.length > 0
               ? filmDetails.notes.join(", ")
               : "Ce film n'a pas encore été noté"}
           </p>
           <div>
+            <p className="film-detail">Commentaires :</p>
             {filmDetails.commentaires && filmDetails.commentaires.length > 0 ? (
               filmDetails.commentaires.map((comment, index) => (
-                <p className="film-detail" key={index}><strong>{comment.auteur}:</strong> {comment.commentaire}</p>
+                <p className="film-detail" key={index}>{comment.commentaire}</p>
               ))
             ) : (
               <p className="film-detail">Ce film n'a pas encore de commentaires</p>

@@ -14,6 +14,7 @@ import Accueil from "../Accueil/Accueil";
 import ListeFilms from "../ListeFilms/ListeFilms";
 import Film from "../Film/Film";
 import Admin from "../Admin/Admin";
+import Footer from "../Footer/Footer";
 import Erreur404 from "../Erreur404/Erreur404";
 import "./App.css";
 
@@ -113,6 +114,7 @@ try{
           />
         </Routes>
       </AnimatePresence>
+      <Footer/>
     </AppContext.Provider>
   );
 

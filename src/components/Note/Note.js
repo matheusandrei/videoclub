@@ -19,7 +19,7 @@ function Note({ note, setNote, soumettreNote }) {
           >
             <FontAwesomeIcon
               icon={faSolidStar}
-              className={`fa-solid fa-star fa-2x ${note >= n || noteSurvolee >= n ? "active" : ""}`}
+              className={`fa-solid fa-star ${note >= n || noteSurvolee >= n ? "active" : ""}`}
             />
           </button>
         ))}
