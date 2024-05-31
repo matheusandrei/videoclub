@@ -2,10 +2,8 @@
   margin: auto;
   width: 60%;
   display: grid;
-  border: 1px solid var(--bleu-sombre);
   padding: 1em;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
  
 }
 
@@ -37,46 +35,6 @@
 .film-detail {
   color: var(--clair);
   margin: 0.2em 0;
-}
-
-
-
-.note-button {
-  background-color: var(--details);
-  color: var(--clair);
-  border: none;
-  padding: 0.5em 1em;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  align-self: start;
-}
-
-.note-button:hover {
-  background-color: var(--bleu-pale);
-}
-
-.comment-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  border-radius: 8px;
-  margin-top: 1em;
-}
-
-.comment-textarea {
-  width: 80%;
-  height: 100%;
-  padding: 0.5em;
-  border: 1px solid var(--bleu-sombre);
-  border-radius: 4px;
-  resize: vertical;
-  font-family: inherit;
-  font-size: 1em;
-}
-
-.comment-textarea::placeholder {
-  color: var(--bleu-pale);
 }
 
 .submit-button {

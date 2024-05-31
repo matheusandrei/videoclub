@@ -107,6 +107,14 @@ function Film() {
             setNouveauCommentaire={setNouveauCommentaire}
             soumettreCommentaire={soumettreCommentaire}
           />
+<p>
+  Note pour ce film:{" "}
+  {filmDetails?.notes && filmDetails.notes.length > 0
+    ? filmDetails.notes.join(", ")
+    : "Ce film n'a pas encore été noté"}
+</p>
+
+          <p>{filmDetails?.commentaire}</p>
         </div>
       </div>
     </article>

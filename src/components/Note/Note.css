@@ -1,0 +1,15 @@
+.note-button {
+    background-color: var(--details);
+    color: var(--clair);
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: start;
+  }
+  
+  .note-button:hover {
+    background-color: var(--bleu-pale);
+  }
+  

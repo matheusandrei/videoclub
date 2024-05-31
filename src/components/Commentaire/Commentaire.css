@@ -1,0 +1,22 @@
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    border-radius: 8px;
+    margin-top: 1em;
+  }
+  
+  .comment-textarea {
+    width: 80%;
+    height: 100%;
+    padding: 0.5em;
+    border: 1px solid var(--bleu-sombre);
+    border-radius: 4px;
+    resize: vertical;
+    font-family: inherit;
+    font-size: 1em;
+  }
+  
+  .comment-textarea::placeholder {
+    color: var(--bleu-pale);
+  }
