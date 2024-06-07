@@ -22,13 +22,16 @@ return (
           <span>{context.nom}</span>
           <button onClick={props.handleLogout}>Logout</button>
         </div>
+        
       ) : (
+        
         <form className="entete-form" onSubmit={props.handleLogin}>
           <input type="text" name="courriel" placeholder="Usager" />
           <input type="password" name="mdp" placeholder="Mot de passe" />
           <button>Login</button>
         </form>
       )}
+      
       </div>
 
 

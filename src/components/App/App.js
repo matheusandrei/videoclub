@@ -15,17 +15,18 @@ import ListeFilms from "../ListeFilms/ListeFilms";
 import Film from "../Film/Film";
 import Admin from "../Admin/Admin";
 import Footer from "../Footer/Footer";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Erreur404 from "../Erreur404/Erreur404";
 import "./App.css";
 
 export const AppContext = React.createContext();
 
 function App() {
-  // let appState = "DEV";
+  let appState = "DEV";
   let apiBaseURL = "https://four1f-tp1-matheusandrei.onrender.com/";
-  // if (appState === "DEV") {
-  //   apiBaseURL = "http://localhost:5502/";
-  // }
+  if (appState === "DEV") {
+    apiBaseURL = "http://localhost:5502/";
+  }
   const location = useLocation();
   // const [estLog, setEstLog]= useState(false);
   const [usager, setUsager] = useState({ estLog: false, user: {} });
@@ -104,15 +105,14 @@ try{
       <Entete handleLogin={login} handleLogout={logout} />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.key}>
-          <Route path="/" element={<Accueil />} />
-          <Route path="/films" element={<ListeFilms />} />
+          {/* <Route element={<PrivateRoute />}> */}
+            <Route path="/admin" element={<Admin></Admin>}></Route>
+          {/* </Route> */}
+          <Route path="/" element={<Accueil />}></Route>
+          <Route path="/films" element={<ListeFilms />}></Route>
           <Route path="/films/:id" element={<Film />} />
-          <Route path="/*" element={<Erreur404 />} />
-          <Route
-            path="/admin"
-            element={usager.estLog ? <Admin /> : <Navigate to="/" />}
-          />
         </Routes>
+
       </AnimatePresence>
       <Footer/>
     </AppContext.Provider>

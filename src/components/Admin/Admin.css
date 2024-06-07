@@ -1,0 +1,40 @@
+.admin-form {
+    background-color: var(--bleu-pale);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.admin-form h2 {
+    color: var(--bleu);
+}
+
+.admin-form div {
+    margin-bottom: 10px;
+}
+
+.admin-form label {
+    color: var(--bleu-sombre);
+    font-weight: bold;
+}
+
+.admin-form input[type="text"],
+.admin-form textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--bleu);
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.admin-form button[type="submit"] {
+    background-color: var(--details);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.admin-form button[type="submit"]:hover {
+    background-color: var(--bleu-sombre);
+}
