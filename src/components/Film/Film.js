@@ -32,6 +32,19 @@ function Film() {
       .catch((error) => console.error('Erreur de chargement du film:', error));
   }, [id]);
 
+  const removeFilm = async () => {
+    const options = {
+      method: "DELETE",
+    };
+
+    try {
+      await fetch(urlTuileFilm, options);
+      window.location.href = '/films'; 
+    } catch (error) {
+      console.error('Erreur de suppression du film:', error);
+    }
+  };
+
   if (!filmDetails) {
     return <div>Film pas trouvé</div>;
   }
@@ -101,6 +114,7 @@ function Film() {
     <article className="film-card">
       <h2 className="film-title">{filmDetails?.titre}</h2>
       <div className="film-content">
+        
         <img
           src={`/img/${filmDetails?.titreVignette}`}
           alt={filmDetails.titre}
@@ -137,8 +151,12 @@ function Film() {
               <p className="film-detail">Ce film n'a pas encore de commentaires</p>
             )}
           </div>
+
         </div>
+        <button className='submit-button delete-button' onClick={removeFilm}>Supprimer ce film</button>
+
       </div>
+      
     </article>
   );
 }
