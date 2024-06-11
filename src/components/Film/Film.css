@@ -59,3 +59,18 @@
 .delete-button:hover {
   background-color: #d32f2f; 
 }
+.boite-commentaires{
+  display: flex;
+  flex-wrap: wrap;
+}
+.boite-commentaires > :first-child {
+  width: 100%;
+}
+.comment-box {
+  display:flex;
+  border-radius: 4px;
+  background-color: #9d9d9d;
+  border: 1px solid var(--bleu-sombre);
+  padding: 10px;
+  margin-bottom: 10px;
+}

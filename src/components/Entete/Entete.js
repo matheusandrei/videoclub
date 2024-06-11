@@ -12,7 +12,7 @@ return (
       <div className="entete">
         <nav>
           {context.estLog && <NavLink to='admin'>Admin</NavLink>}
-          <NavLink to="films">Liste des films</NavLink>
+          <NavLink to="films">Films</NavLink>
         </nav>
         <NavLink to="/">
           <img className="logo" src="/img/logo-cinestream.png" alt="logo"/>

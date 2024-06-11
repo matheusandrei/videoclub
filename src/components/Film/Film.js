@@ -7,6 +7,7 @@ import Commentaire from "../Commentaire/Commentaire";
 import "./Film.css";
 
 function Film() {
+  const context = useContext(AppContext);
   const { nom } = useContext(AppContext);
   const { id } = useParams();
   const [filmDetails, setFilmDetails] = useState(null);
@@ -141,19 +142,25 @@ function Film() {
           <p className="film-detail">
             {`Moyenne des notes: ${noteMoyenne.toFixed(2)}/5` }
           </p>
-          <div>
-            <p className="film-detail">Commentaires :</p>
-            {filmDetails.commentaires && filmDetails.commentaires.length > 0 ? (
-              filmDetails.commentaires.map((comment, index) => (
-                <p className="film-detail" key={index}>{comment.commentaire}</p>
-              ))
-            ) : (
-              <p className="film-detail">Ce film n'a pas encore de commentaires</p>
-            )}
-          </div>
+          <div className="boite-commentaires">
+  <p className="film-detail">Commentaires :</p>
+  {filmDetails.commentaires && filmDetails.commentaires.length > 0 ? (
+    filmDetails.commentaires.map((comment, index) => (
+      <div key={index} className="comment-box">
+        <p className="film-detail">{comment.commentaire}</p>
+      </div>
+    ))
+  ) : (
+    <p className="film-detail">Ce film n'a pas encore de commentaires</p>
+  )}
+</div>
 
+{context.estLog && (
+  <button className='submit-button delete-button' onClick={removeFilm}>Supprimer film</button>
+)}
         </div>
-        <button className='submit-button delete-button' onClick={removeFilm}>Supprimer ce film</button>
+
+
 
       </div>
       
